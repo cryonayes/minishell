@@ -6,7 +6,7 @@
 #    By: aeser <aeser@42kocaeli.com.tr>             +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/26 13:53:13 by aeser             #+#    #+#              #
-#    Updated: 2022/06/26 14:00:45 by aeser            ###   ########.fr        #
+#    Updated: 2022/06/26 16:15:59 by aeser            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,24 +15,23 @@ NAME		:= minishell
 SRC_DIR		:= src
 OBJ_DIR		:= obj
 
-SRCS		:= $(wildcard $(SRC_DIR)/*.c)
+SRCS		:= $(shell find $(SRC_DIR) -type f -name "*.c")
 OBJS		:= $(SRCS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
 
+LIBS		:= -lreadline
 LIBFT_DIR	:= ./libs/libft
 LIBFT		:= $(LIBFT_DIR)/libft.a
 
 INCLUDE		:= -I./include
-CFLAGS		:= -Wall -Wextra $(INCLUDE) -g
+CFLAGS		:= -Wall -Wextra $(INCLUDE) $(LIBS) -g
 
 all: $(NAME)
 
-$(NAME): $(LIBFT) $(OBJ_DIR) $(OBJS)
-	$(CC) $(OBJS) $(LIBFT) -o $(NAME)
-
-$(OBJ_DIR):
-	@mkdir -p $(OBJ_DIR)
+$(NAME): $(LIBFT) $(OBJS)
+	$(CC) $(OBJS) $(LIBFT) $(LIBS) -o $(NAME)
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
+	@mkdir -p "$(@D)"
 	$(CC) $(CFLAGS) -c $< -o $@
 
 $(LIBFT):
