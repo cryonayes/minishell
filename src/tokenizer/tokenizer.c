@@ -6,7 +6,7 @@
 /*   By: fcil <fcil@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/26 16:00:48 by aeser             #+#    #+#             */
-/*   Updated: 2022/07/02 18:55:39 by fcil             ###   ########.fr       */
+/*   Updated: 2022/07/02 21:04:56 by fcil             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,13 +37,11 @@ echo '$USER'
 
 char	*isclosed(char **str, char c)
 {
-	int	i;
-	int	j;
+	int		i;
+	int		j;
 	char	*tstr;
 
-	tstr = *str;
 	i = -1;
-	//printf("\n%c\n", str[0][0]);
 	while (str[0][++i])
 	{
 		if (str[0][i] == c)
@@ -55,13 +53,7 @@ char	*isclosed(char **str, char c)
 				tstr[j] = str[0][j];
 			}
 			tstr[j] = '\0';
-			*str = &str[i];
-			// while (/* condition */)
-			// {
-			// 	/* code */
-			// }
-			
-			printf("%c", *str);
+			*str += i;
 			return (tstr);
 		}
 	}
@@ -92,7 +84,6 @@ t_token	*tokenizer(char *cmd)
 			printf("|%s|\n", token_value); //todo: create token and add !!!
 			free(token_value);
 		}
-		//printf("-%c-", *tcmd); 
 		tcmd++;
 	}
 	printf("%d", isenv);
