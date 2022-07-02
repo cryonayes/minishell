@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aeser <aeser@42kocaeli.com.tr>             +#+  +:+       +#+        */
+/*   By: fcil <fcil@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/26 14:01:09 by aeser             #+#    #+#             */
-/*   Updated: 2022/07/02 14:14:55 by aeser            ###   ########.fr       */
+/*   Updated: 2022/07/02 16:09:56 by fcil             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,13 +29,15 @@ void	main_loop(void)
 
 int	main(int argc, char **argv, char **env)
 {
-	char	*input;
+	//char	*input;
+//
+	//while (1)
+	//{
+	//	input = readline(PROMPT);
+	//	if (input == NULL)
+	//		continue ;
+	//	tokenizer(input);
+	//}
 
-	while (1)
-	{
-		input = readline(PROMPT);
-		if (input == NULL)
-			continue ;
-		tokenizer(input);
-	}
+	tokenizer("./program arg1 \"arg2\">file.txt");
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aeser <aeser@42kocaeli.com.tr>             +#+  +:+       +#+        */
+/*   By: fcil <fcil@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/26 14:00:57 by aeser             #+#    #+#             */
-/*   Updated: 2022/07/02 14:10:10 by aeser            ###   ########.fr       */
+/*   Updated: 2022/07/02 15:57:12 by fcil             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include <readline/history.h>
 # include <stdlib.h>
 # include "libft.h"
+# include <stdbool.h>
 
 typedef enum e_tokenType
 {
@@ -42,6 +43,6 @@ typedef struct s_token
 } t_token;
 
 // tokenizer.c
-void	tokenizer(char *cmd);
+t_token		*tokenizer(char *cmd);
 
 #endif
