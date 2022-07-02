@@ -6,7 +6,7 @@
 /*   By: fcil <fcil@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/26 16:00:48 by aeser             #+#    #+#             */
-/*   Updated: 2022/07/02 18:54:31 by fcil             ###   ########.fr       */
+/*   Updated: 2022/07/02 18:55:39 by fcil             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,11 @@ char	*isclosed(char **str, char c)
 			}
 			tstr[j] = '\0';
 			*str = &str[i];
+			// while (/* condition */)
+			// {
+			// 	/* code */
+			// }
+			
 			printf("%c", *str);
 			return (tstr);
 		}
