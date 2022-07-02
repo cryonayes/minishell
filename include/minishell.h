@@ -6,7 +6,7 @@
 /*   By: fcil <fcil@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/26 14:00:57 by aeser             #+#    #+#             */
-/*   Updated: 2022/07/02 17:46:12 by fcil             ###   ########.fr       */
+/*   Updated: 2022/07/02 18:28:46 by fcil             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,13 +40,17 @@ typedef struct s_token
 	char				*value;
 	struct s_token		*next;
 	struct s_token		*previous;
-} t_token;
+}				t_token;
 
 // tokenizer.c
 t_token		*tokenizer(char *cmd);
 
 //token_actions.c
-t_token		*token_init(t_token *stack)
-void	token_add(t_token *stack, char *node);
+t_token		*token_init(t_token *stack);
+void		token_add(t_token *stack, t_token *node);
+void		token_create(char *value, enum e_tokenType type, t_token *first);
+
+//utils.c
+void	error_exit(char	*str);
 
 #endif

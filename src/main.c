@@ -6,7 +6,7 @@
 /*   By: fcil <fcil@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/26 14:01:09 by aeser             #+#    #+#             */
-/*   Updated: 2022/07/02 17:13:05 by fcil             ###   ########.fr       */
+/*   Updated: 2022/07/02 18:32:58 by fcil             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,6 @@ int	main(int argc, char **argv, char **env)
 	//	tokenizer(input);
 	//}
 
-	tokenizer("./program arg1 \"\"arg\"\">file.txt");
+	tokenizer("./program arg1\"YEY\"\"\"te\" \" test \"TEST\">file.txt");
 	tokenizer("");
 }
