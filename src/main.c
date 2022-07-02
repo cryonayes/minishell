@@ -6,7 +6,7 @@
 /*   By: fcil <fcil@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/26 14:01:09 by aeser             #+#    #+#             */
-/*   Updated: 2022/07/02 16:09:56 by fcil             ###   ########.fr       */
+/*   Updated: 2022/07/02 17:13:05 by fcil             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	main_loop(void)
 int	main(int argc, char **argv, char **env)
 {
 	//char	*input;
-//
+
 	//while (1)
 	//{
 	//	input = readline(PROMPT);
@@ -39,5 +39,6 @@ int	main(int argc, char **argv, char **env)
 	//	tokenizer(input);
 	//}
 
-	tokenizer("./program arg1 \"arg2\">file.txt");
+	tokenizer("./program arg1 \"\"arg\"\">file.txt");
+	tokenizer("");
 }
