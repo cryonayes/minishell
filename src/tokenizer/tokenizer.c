@@ -5,10 +5,12 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: fcil <fcil@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/06/26 16:00:48 by aeser             #+#    #+#             */
-/*   Updated: 2022/07/03 16:26:02 by fcil             ###   ########.fr       */
+/*   Created: 2022/07/01 16:50:21 by fcil              #+#    #+#             */
+/*   Updated: 2022/07/03 17:14:47 by fcil             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+
 
 #include "minishell.h"
 
@@ -34,50 +36,19 @@ echo '$USER'
 	2. 
 */
 
-char	*isclosed(char **str, char c)
+
+void	quotes_check(char **cmd, t_token **list)
 {
-	int		i;
-	int		j;
-	char	*tstr;
+	t_token n_token;
+	char	*value;
 
-	i = -1;
-	while (str[0][++i])
+	value = get_quotes(cmd, '\'');
+	if (value != NULL)
 	{
-		if (str[0][i] == c)
-		{
-			j = -1;
-			tstr = malloc(i + 1 * sizeof(char));
-			while (++j < i)
-			{
-				tstr[j] = str[0][j];
-			}
-			tstr[j] = '\0';
-			*str += i;
-			return (tstr);
-		}
+		//n_token = token_create(value, T_LITERAL, *list);
 	}
-	return (NULL);
-}
-
-void	quotes_check(char **cmd, char column)
-{
-	int		i;
-	char	*tcmd;
-	char	*token_value;
-
-	tcmd = *cmd;
-	i = -1;
-	if (*tcmd == column)
-	{
-		tcmd++;
-		token_value  = isclosed(&tcmd, column);
-		if(!token_value)
-			error_exit("Quote Error"); //quote is not closed.
-		printf("|%s|\n", token_value); //todo: create token and add !!!
-		//token_create(token_value, get_token_type(token_value), list);
-		free(token_value);
-	}
-	*cmd = tcmd;
+	
+	get_quotes(cmd, '"');
 }
 
 void	skip_spaces(char **cmd)
@@ -98,21 +69,19 @@ void	*tokenizer(char *cmd, t_token *list)
 	int		i;
 	char	*tcmd;
 
+	
 	tcmd = cmd;
 	i = -1;
 	while (*tcmd)
 	{
-
 		skip_spaces(&tcmd);
-		printf("STR AFTER SPACE: |%s|\n", tcmd);
-		quotes_check(&tcmd, '\'');
-
-		if(*tcmd)
+		quotes_check(&tcmd, &list);
+		if (*tcmd)
 			tcmd++;
+		printf("STR AFTER : |%s|\n", tcmd);
 	}
 	printf("\n-----END-----\n");
 }
-
 
 /*
 	./command "$HOME">file.txt

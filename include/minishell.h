@@ -3,12 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aeser <aeser@42kocaeli.com.tr>             +#+  +:+       +#+        */
+/*   By: fcil <fcil@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/06/26 14:00:57 by aeser             #+#    #+#             */
-/*   Updated: 2022/07/03 14:00:23 by aeser            ###   ########.fr       */
+/*   Created: 2022/07/01 17:07:30 by fcil              #+#    #+#             */
+/*   Updated: 2022/07/03 18:19:31 by fcil             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #ifndef H_MINISHELL
 # define H_MINISHELL
@@ -25,14 +26,10 @@
 typedef enum e_tokenType
 {
 	T_FILE = 50, // ./command arg > (FILE)
-	TOKEN_TYPE_LAST
-} t_tokenType;
-
-typedef enum e_operator
-{
-	T_PIPE = TOKEN_TYPE_LAST,
+	T_LITERAL,
+	T_PIPE,
 	T_REDIRECT
-} t_operator;
+} t_tokenType;
 
 typedef struct s_token
 {
@@ -46,9 +43,15 @@ typedef struct s_token
 void	*tokenizer(char *cmd, t_token *list);
 
 //token_actions.c
-t_token		*token_init(t_token *stack);
-void		token_add(t_token *stack, t_token *node);
-void		token_create(char *value, enum e_tokenType type, t_token *first);
+void		token_add(t_token **first, t_token *node);
+t_token		*token_create(char *value, enum e_tokenType type);
+void		print_tokens(t_token *first);
+void		destroy_tokens(t_token *first);
+
+//quotes.c
+char		*get_quotes(char **cmd, char column);
+char		*isclosed(char **str, char c);
+
 
 //utils.c
 void	error_exit(char	*str);

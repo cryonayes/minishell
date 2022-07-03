@@ -6,7 +6,7 @@
 /*   By: fcil <fcil@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/26 14:01:09 by aeser             #+#    #+#             */
-/*   Updated: 2022/07/03 15:47:13 by fcil             ###   ########.fr       */
+/*   Updated: 2022/07/03 18:34:29 by fcil             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,29 @@ void	main_loop(void)
 	}
 }
 
+void test(t_token *list)
+{
+	t_token *elem;
+	char *value;
+	
+	value = calloc(2, 1);
+	value[0] = '0';
+	elem = token_create(value, T_LITERAL);
+	token_add(&list, elem);
+
+	value = calloc(2, 1);
+	value[0] = '1';
+	elem = token_create(value, T_LITERAL);
+	token_add(&list, elem);
+
+	value = calloc(2, 1);
+	value[0] = '2';
+	elem = token_create(value, T_LITERAL);
+	token_add(&list, elem);
+
+	print_tokens(list);
+}
+
 int	main(int argc, char **argv, char **env)
 {
 	//char	*input;
@@ -38,6 +61,8 @@ int	main(int argc, char **argv, char **env)
 	//		continue ;
 	//	tokenizer(input);
 	//}
-	t_token list;
-	tokenizer(argv[1], &list);
+	t_token *list;
+	test(list);
+	destroy_tokens(list);
+	//tokenizer(argv[1], &list);
 }
