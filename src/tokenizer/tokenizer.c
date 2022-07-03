@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenizer.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fcil <fcil@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: aeser <aeser@42kocaeli.com.tr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/26 16:00:48 by aeser             #+#    #+#             */
-/*   Updated: 2022/07/02 21:04:56 by fcil             ###   ########.fr       */
+/*   Updated: 2022/07/03 14:50:00 by aeser            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ echo '$USER'
 	2. 
 */
 
-
 char	*isclosed(char **str, char c)
 {
 	int		i;
@@ -60,33 +59,30 @@ char	*isclosed(char **str, char c)
 	return (NULL);
 }
 
-t_token	*tokenizer(char *cmd)
+void	*tokenizer(char *cmd, t_token *list)
 {
-	t_token	*first;
 	int		i;
 	bool	isenv;
 	char	*tcmd;
 	char	*token_value;
 
-	first = token_init(first);
 	tcmd = cmd;
 	isenv = false;
 	i = -1;
 	while (*tcmd)
 	{
-		if (*tcmd == '"')
+		if (*tcmd == "'")
 		{
 			tcmd++;
-			token_value  = isclosed(&tcmd, '"');
+			token_value  = isclosed(&tcmd, "'");
 			if(!token_value)
 				error_exit("Quote Error"); //quote is not closed.
-			
 			printf("|%s|\n", token_value); //todo: create token and add !!!
+			token_create(token_value, get_token_type(token_value), list);
 			free(token_value);
 		}
 		tcmd++;
 	}
 	printf("%d", isenv);
 	printf("\n-----END-----\n");
-	return (first);
 }

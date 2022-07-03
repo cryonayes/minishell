@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fcil <fcil@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: aeser <aeser@42kocaeli.com.tr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/26 14:00:57 by aeser             #+#    #+#             */
-/*   Updated: 2022/07/02 18:28:46 by fcil             ###   ########.fr       */
+/*   Updated: 2022/07/03 14:00:23 by aeser            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,10 +40,10 @@ typedef struct s_token
 	char				*value;
 	struct s_token		*next;
 	struct s_token		*previous;
-}				t_token;
+}	t_token;
 
 // tokenizer.c
-t_token		*tokenizer(char *cmd);
+void	*tokenizer(char *cmd, t_token *list);
 
 //token_actions.c
 t_token		*token_init(t_token *stack);

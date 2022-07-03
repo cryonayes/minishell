@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_actions.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fcil <fcil@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: aeser <aeser@42kocaeli.com.tr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/02 17:19:44 by fcil              #+#    #+#             */
-/*   Updated: 2022/07/02 18:22:22 by fcil             ###   ########.fr       */
+/*   Updated: 2022/07/03 14:49:51 by aeser            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,5 +40,4 @@ void		token_create(char *value, enum e_tokenType type, t_token *first)
 	n_token = malloc(sizeof(t_token));
 	n_token->type = type;
 	n_token->value = value;
-	token_add(first, n_token);
 }

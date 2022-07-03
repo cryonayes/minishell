@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fcil <fcil@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: aeser <aeser@42kocaeli.com.tr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/26 14:01:09 by aeser             #+#    #+#             */
-/*   Updated: 2022/07/02 18:32:58 by fcil             ###   ########.fr       */
+/*   Updated: 2022/07/03 14:49:07 by aeser            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,21 @@ int	main(int argc, char **argv, char **env)
 	//		continue ;
 	//	tokenizer(input);
 	//}
-
-	tokenizer("./program arg1\"YEY\"\"\"te\" \" test \"TEST\">file.txt");
-	tokenizer("");
+	t_token list;
+	tokenizer(argv[1], &list);
 }
+
+/*
+	./command "$HOME">file.txt
+		./command "$HOME" > file.txt
+		[./command] ["$HOME"] [>] [file.txt]
+		[./command] ["/home/aeser"] [>] [file.txt]
+		
+		[./command] -> {t_type: T_Literal, value: "./command", prev: NULL, next..}
+		["/home/aeser"] -> {t_type: T_Literal, value: "/home/aeser", prev: &["./command"], next..}
+		[>,>>, <] -> {t_type: T_Redirect, value: ">", prev: &["/home/aeser"], next..}
+		[file.txt] -> {t_type: T_File, value: "file.txt", prev: &[">"], next..}
+		[<<] -> {t_type: T_Heredoc, value: "<<", prev: &["file.txt"], next..}
+
+	echo '"$HOME"' "'$HOME'">>test.txt
+*/
