@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenizer.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aeser <aeser@42kocaeli.com.tr>             +#+  +:+       +#+        */
+/*   By: fcil <fcil@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/26 16:00:48 by aeser             #+#    #+#             */
-/*   Updated: 2022/07/03 14:50:00 by aeser            ###   ########.fr       */
+/*   Updated: 2022/07/03 16:26:02 by fcil             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,30 +59,72 @@ char	*isclosed(char **str, char c)
 	return (NULL);
 }
 
-void	*tokenizer(char *cmd, t_token *list)
+void	quotes_check(char **cmd, char column)
 {
 	int		i;
-	bool	isenv;
 	char	*tcmd;
 	char	*token_value;
 
+	tcmd = *cmd;
+	i = -1;
+	if (*tcmd == column)
+	{
+		tcmd++;
+		token_value  = isclosed(&tcmd, column);
+		if(!token_value)
+			error_exit("Quote Error"); //quote is not closed.
+		printf("|%s|\n", token_value); //todo: create token and add !!!
+		//token_create(token_value, get_token_type(token_value), list);
+		free(token_value);
+	}
+	*cmd = tcmd;
+}
+
+void	skip_spaces(char **cmd)
+{
+	char	*tcmd;
+
+	tcmd = *cmd;
+	while (*tcmd <= ' ' && *tcmd > 0)
+	{
+		printf("c:%d\n",*tcmd);
+		tcmd++;
+	}
+	*cmd = tcmd;
+}
+
+void	*tokenizer(char *cmd, t_token *list)
+{
+	int		i;
+	char	*tcmd;
+
 	tcmd = cmd;
-	isenv = false;
 	i = -1;
 	while (*tcmd)
 	{
-		if (*tcmd == "'")
-		{
+
+		skip_spaces(&tcmd);
+		printf("STR AFTER SPACE: |%s|\n", tcmd);
+		quotes_check(&tcmd, '\'');
+
+		if(*tcmd)
 			tcmd++;
-			token_value  = isclosed(&tcmd, "'");
-			if(!token_value)
-				error_exit("Quote Error"); //quote is not closed.
-			printf("|%s|\n", token_value); //todo: create token and add !!!
-			token_create(token_value, get_token_type(token_value), list);
-			free(token_value);
-		}
-		tcmd++;
 	}
-	printf("%d", isenv);
 	printf("\n-----END-----\n");
 }
+
+
+/*
+	./command "$HOME">file.txt
+		./command "$HOME" > file.txt
+		[./command] ["$HOME"] [>] [file.txt]
+		[./command] ["/home/aeser"] [>] [file.txt]
+		
+		[./command] -> {t_type: T_Literal, value: "./command", prev: NULL, next..}
+		["/home/aeser"] -> {t_type: T_Literal, value: "/home/aeser", prev: &["./command"], next..}
+		[>,>>, <] -> {t_type: T_Redirect, value: ">", prev: &["/home/aeser"], next..}
+		[file.txt] -> {t_type: T_File, value: "file.txt", prev: &[">"], next..}
+		[<<] -> {t_type: T_Heredoc, value: "<<", prev: &["file.txt"], next..}
+
+	echo '"$HOME"' "'$HOME'">>test.txt
+*/
