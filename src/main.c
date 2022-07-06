@@ -6,7 +6,7 @@
 /*   By: fcil <fcil@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/26 14:01:09 by aeser             #+#    #+#             */
-/*   Updated: 2022/07/03 18:34:29 by fcil             ###   ########.fr       */
+/*   Updated: 2022/07/06 13:04:43 by fcil             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,8 @@ void test(t_token *list)
 int	main(int argc, char **argv, char **env)
 {
 	//char	*input;
-
+	(void)(argc);
+	(void)(env);
 	//while (1)
 	//{
 	//	input = readline(PROMPT);
@@ -62,7 +63,10 @@ int	main(int argc, char **argv, char **env)
 	//	tokenizer(input);
 	//}
 	t_token *list;
+
+	list = NULL;
 	test(list);
+	tokenizer(argv[1], list);
+	print_tokens(list);
 	destroy_tokens(list);
-	//tokenizer(argv[1], &list);
 }

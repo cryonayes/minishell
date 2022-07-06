@@ -6,7 +6,7 @@
 /*   By: fcil <fcil@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 16:50:21 by fcil              #+#    #+#             */
-/*   Updated: 2022/07/03 17:14:47 by fcil             ###   ########.fr       */
+/*   Updated: 2022/07/06 15:32:25 by fcil             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,19 +36,45 @@ echo '$USER'
 	2. 
 */
 
+char	*ft_strcut(char *str, char c)
+{
+	int	i;
+	char *n_str;
+
+	i = -1;
+	while (str[++i] != c || str[i]);
+	if (i == ft_strlen(str))
+		return NULL;
+	n_str = ft_calloc(i, sizeof(char));
+	while (*str)
+		*n_str = *str++;
+	return (n_str);
+}
+char	*getkeys_dquote(char	*value)
+{
+	
+
+	free(words);
+	free(value);
+}	
+
+//$HOME A $HOME
+//$HOME
+//A$HOME
+//$HOME ASB $HOME
 
 void	quotes_check(char **cmd, t_token **list)
 {
-	t_token n_token;
+	t_token *n_token;
 	char	*value;
 
-	value = get_quotes(cmd, '\'');
+	n_token = NULL;
+	value = get_quotes(cmd, '"');
 	if (value != NULL)
 	{
-		//n_token = token_create(value, T_LITERAL, *list);
+		getkeys_dquote(value);
+		//n_token = token_create(value, )		
 	}
-	
-	get_quotes(cmd, '"');
 }
 
 void	skip_spaces(char **cmd)
@@ -56,11 +82,8 @@ void	skip_spaces(char **cmd)
 	char	*tcmd;
 
 	tcmd = *cmd;
-	while (*tcmd <= ' ' && *tcmd > 0)
-	{
-		printf("c:%d\n",*tcmd);
+	while (*tcmd <= ' ' && *tcmd != '\0')
 		tcmd++;
-	}
 	*cmd = tcmd;
 }
 
@@ -78,7 +101,7 @@ void	*tokenizer(char *cmd, t_token *list)
 		quotes_check(&tcmd, &list);
 		if (*tcmd)
 			tcmd++;
-		printf("STR AFTER : |%s|\n", tcmd);
+		//printf("STR AFTER : |%s|\n", tcmd);
 	}
 	printf("\n-----END-----\n");
 }

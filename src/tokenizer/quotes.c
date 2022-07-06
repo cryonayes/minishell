@@ -6,7 +6,7 @@
 /*   By: fcil <fcil@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/03 16:56:01 by fcil              #+#    #+#             */
-/*   Updated: 2022/07/03 17:03:20 by fcil             ###   ########.fr       */
+/*   Updated: 2022/07/06 12:41:22 by fcil             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,12 +39,11 @@ char	*isclosed(char **str, char c)
 
 char	*get_quotes(char **cmd, char column)
 {
-	int		i;
 	char	*tcmd;
 	char	*token_value;
 
+	token_value = NULL;
 	tcmd = *cmd;
-	i = -1;
 	if (*tcmd == column)
 	{
 		tcmd++;
