@@ -6,7 +6,7 @@
 /*   By: fcil <fcil@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 16:50:21 by fcil              #+#    #+#             */
-/*   Updated: 2022/07/06 15:32:25 by fcil             ###   ########.fr       */
+/*   Updated: 2022/07/08 17:10:07 by fcil             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,44 +36,71 @@ echo '$USER'
 	2. 
 */
 
-char	*ft_strcut(char *str, char c)
+char	*get_envkey(char **ptr)
 {
-	int	i;
-	char *n_str;
+	char	*str;
+	char	*key;
+	int		i;
 
-	i = -1;
-	while (str[++i] != c || str[i]);
-	if (i == ft_strlen(str))
-		return NULL;
-	n_str = ft_calloc(i, sizeof(char));
-	while (*str)
-		*n_str = *str++;
-	return (n_str);
+	i = 0;
+	key = *ptr;
+	while (isalnum(key[i]) && key[i])
+		i++;
+	str = ft_calloc(i + 1, sizeof(char));
+	*ptr = &key[i];
+	while (--i >= 0)
+		str[i] = key[i];
+	return (str);
 }
+
 char	*getkeys_dquote(char	*value)
 {
-	
+	char	**keys;
+	int		i;
+	char	*n_value;
+	char	*key_ptr;
 
-	free(words);
+	keys = ft_split(value, '$');
+	n_value = ft_calloc(1, 1);
+	i = 0;
+	if (value[0] == '$')
+		i = -1;
+	else
+	{
+		n_value = ft_sum_strjoin(n_value, keys[0]);
+		free(keys[0]);
+	}
+	while (keys[++i])
+	{
+		key_ptr = keys[i];
+		n_value = ft_sum_strjoin(n_value, getenv(get_envkey(&key_ptr)));
+		n_value = ft_sum_strjoin(n_value, key_ptr);
+		free(keys[i]);
+	}
+	free(keys);
 	free(value);
+	return (n_value);
 }	
-
-//$HOME A $HOME
-//$HOME
-//A$HOME
-//$HOME ASB $HOME
 
 void	quotes_check(char **cmd, t_token **list)
 {
-	t_token *n_token;
+	t_token	*n_token;
 	char	*value;
 
 	n_token = NULL;
 	value = get_quotes(cmd, '"');
 	if (value != NULL)
 	{
-		getkeys_dquote(value);
-		//n_token = token_create(value, )		
+		value = getkeys_dquote(value);
+		n_token = token_create(value, T_LITERAL);
+		token_add(&*list, n_token);
+		value = NULL;
+	}
+	value = get_quotes(cmd, '\'');
+	if (value != NULL)
+	{
+		n_token = token_create(value, T_LITERAL);
+		token_add(&*list, n_token);
 	}
 }
 
@@ -92,7 +119,6 @@ void	*tokenizer(char *cmd, t_token *list)
 	int		i;
 	char	*tcmd;
 
-	
 	tcmd = cmd;
 	i = -1;
 	while (*tcmd)

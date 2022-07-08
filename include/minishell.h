@@ -6,7 +6,7 @@
 /*   By: fcil <fcil@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 17:07:30 by fcil              #+#    #+#             */
-/*   Updated: 2022/07/03 18:19:31 by fcil             ###   ########.fr       */
+/*   Updated: 2022/07/08 17:10:41 by fcil             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,9 +51,12 @@ void		destroy_tokens(t_token *first);
 //quotes.c
 char		*get_quotes(char **cmd, char column);
 char		*isclosed(char **str, char c);
+char		*get_envkey(char **ptr);
+char		*getkeys_dquote(char	*value);
 
 
 //utils.c
-void	error_exit(char	*str);
+void		error_exit(char	*str);
+char		*ft_sum_strjoin(char *src, char *str2);
 
 #endif

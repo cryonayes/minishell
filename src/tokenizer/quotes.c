@@ -6,7 +6,7 @@
 /*   By: fcil <fcil@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/03 16:56:01 by fcil              #+#    #+#             */
-/*   Updated: 2022/07/06 12:41:22 by fcil             ###   ########.fr       */
+/*   Updated: 2022/07/08 17:10:50 by fcil             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,10 +47,56 @@ char	*get_quotes(char **cmd, char column)
 	if (*tcmd == column)
 	{
 		tcmd++;
-		token_value  = isclosed(&tcmd, column);
-		if(!token_value)
+		token_value = isclosed(&tcmd, column);
+		if (!token_value)
 			error_exit("Quote Error");
 	}
 	*cmd = tcmd;
 	return (token_value);
+}
+
+char	*get_envkey(char **ptr)
+{
+	char	*str;
+	char	*key;
+	int		i;
+
+	i = 0;
+	key = *ptr;
+	while (isalnum(key[i]) && key[i])
+		i++;
+	str = ft_calloc(i + 1, sizeof(char));
+	*ptr = &key[i];
+	while (--i >= 0)
+		str[i] = key[i];
+	return (str);
+}
+
+char	*getkeys_dquote(char	*value)
+{
+	char	**keys;
+	int		i;
+	char	*n_value;
+	char	*key_ptr;
+
+	keys = ft_split(value, '$');
+	n_value = ft_calloc(1, 1);
+	i = 0;
+	if (value[0] == '$')
+		i = -1;
+	else
+	{
+		n_value = ft_sum_strjoin(n_value, keys[0]);
+		free(keys[0]);
+	}
+	while (keys[++i])
+	{
+		key_ptr = keys[i];
+		n_value = ft_sum_strjoin(n_value, getenv(get_envkey(&key_ptr)));
+		n_value = ft_sum_strjoin(n_value, key_ptr);
+		free(keys[i]);
+	}
+	free(keys);
+	free(value);
+	return (n_value);
 }

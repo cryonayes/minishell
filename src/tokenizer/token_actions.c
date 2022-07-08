@@ -6,7 +6,7 @@
 /*   By: fcil <fcil@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/02 17:19:44 by fcil              #+#    #+#             */
-/*   Updated: 2022/07/03 18:33:14 by fcil             ###   ########.fr       */
+/*   Updated: 2022/07/08 16:46:04 by fcil             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ void	print_tokens(t_token *first)
 	int		i;
 	t_token *t;
 
+	printf("\nTOKENS;\n");
 	i = 0;
 	t = first;
 	while (t != NULL)

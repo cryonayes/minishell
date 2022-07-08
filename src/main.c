@@ -6,7 +6,7 @@
 /*   By: fcil <fcil@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/26 14:01:09 by aeser             #+#    #+#             */
-/*   Updated: 2022/07/06 13:04:43 by fcil             ###   ########.fr       */
+/*   Updated: 2022/07/08 17:09:57 by fcil             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	main_loop(void)
 	}
 }
 
-void test(t_token *list)
+void test(t_token **list)
 {
 	t_token *elem;
 	char *value;
@@ -35,19 +35,7 @@ void test(t_token *list)
 	value = calloc(2, 1);
 	value[0] = '0';
 	elem = token_create(value, T_LITERAL);
-	token_add(&list, elem);
-
-	value = calloc(2, 1);
-	value[0] = '1';
-	elem = token_create(value, T_LITERAL);
-	token_add(&list, elem);
-
-	value = calloc(2, 1);
-	value[0] = '2';
-	elem = token_create(value, T_LITERAL);
-	token_add(&list, elem);
-
-	print_tokens(list);
+	token_add(&*list, elem);
 }
 
 int	main(int argc, char **argv, char **env)
@@ -63,10 +51,17 @@ int	main(int argc, char **argv, char **env)
 	//	tokenizer(input);
 	//}
 	t_token *list;
-
+	char	*cmd;
 	list = NULL;
-	test(list);
-	tokenizer(argv[1], list);
-	print_tokens(list);
+	test(&list);
+
+	while (1)
+	{
+		cmd = readline("test> ");
+		tokenizer(cmd, list);
+		print_tokens(list);
+		free(cmd);
+	}
+
 	destroy_tokens(list);
 }
