@@ -6,7 +6,7 @@
 /*   By: fcil <fcil@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/03 16:56:01 by fcil              #+#    #+#             */
-/*   Updated: 2022/07/08 17:10:50 by fcil             ###   ########.fr       */
+/*   Updated: 2022/07/08 18:49:30 by fcil             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,4 +99,26 @@ char	*getkeys_dquote(char	*value)
 	free(keys);
 	free(value);
 	return (n_value);
+}
+
+void	quotes_check(char **cmd, t_token **list)
+{
+	t_token	*n_token;
+	char	*value;
+
+	n_token = NULL;
+	value = get_quotes(cmd, '"');
+	if (value != NULL)
+	{
+		value = getkeys_dquote(value);
+		n_token = token_create(value, T_LITERAL);
+		token_add(&*list, n_token);
+		value = NULL;
+	}
+	value = get_quotes(cmd, '\'');
+	if (value != NULL)
+	{
+		n_token = token_create(value, T_LITERAL);
+		token_add(&*list, n_token);
+	}
 }

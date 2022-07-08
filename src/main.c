@@ -6,7 +6,7 @@
 /*   By: fcil <fcil@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/26 14:01:09 by aeser             #+#    #+#             */
-/*   Updated: 2022/07/08 17:09:57 by fcil             ###   ########.fr       */
+/*   Updated: 2022/07/08 20:48:25 by fcil             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ void	main_loop(void)
 		input = readline(PROMPT);
 		if (input && *input)
 			add_history(input);
-		
 	}
 }
 

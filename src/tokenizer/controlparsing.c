@@ -1,32 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   controlparsing.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fcil <fcil@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/07/02 18:26:50 by fcil              #+#    #+#             */
-/*   Updated: 2022/07/08 18:46:38 by fcil             ###   ########.fr       */
+/*   Created: 2022/07/08 18:46:27 by fcil              #+#    #+#             */
+/*   Updated: 2022/07/08 18:50:00 by fcil             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	error_exit(char	*str)
+bool	ft_isoperator(char c)
 {
-	printf("OH NO BEST SHELL HAS DOWN!!!\n Error Message: ");
-	printf("%s\n", str);
-	exit(-1);
+	return (ft_isclosebracket(c) || ft_isopeningbracket(c));
 }
 
-char	*ft_sum_strjoin(char *src, char *str2)
+bool	ft_isclosebracket(char c)
 {
-	char	*m_str;
+	return (c == '<');
+}
 
-	m_str = src;
-	m_str = ft_strjoin(m_str, str2);
-	if (!m_str)
-		return (src);
-	free(src);
-	return (m_str);
+bool	ft_isopeningbracket(char c)
+{
+	return (c == '>');
+}
+
+bool	ft_isspace(char c)
+{
+	return (c <= ' ' && c != '\0');
+}
+
+bool	ft_isquote(char c)
+{
+	return (c == '\'' || c == '"');
 }
