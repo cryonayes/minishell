@@ -6,7 +6,7 @@
 /*   By: fcil <fcil@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/02 17:19:44 by fcil              #+#    #+#             */
-/*   Updated: 2022/07/08 18:51:33 by fcil             ###   ########.fr       */
+/*   Updated: 2022/07/08 23:48:13 by fcil             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ void	token_add(t_token **first, t_token *node)
 {
 	t_token	*last;
 
+	if (!node->value)
+		return ;
 	if (*first == NULL)
 	{
 		*first = node;
@@ -29,13 +31,17 @@ void	token_add(t_token **first, t_token *node)
 	node->next = NULL;
 }
 
-t_token		*token_create(char *value, enum e_tokenType type)
+t_token	*token_create(char *value, enum e_tokenType type)
 {
 	t_token	*n_token;
 
-	n_token = malloc(sizeof(t_token));
+	if (!value)
+		return (NULL);
+	n_token = ft_calloc(1, sizeof(t_token));
 	n_token->type = type;
 	n_token->value = value;
+	n_token->next = NULL;
+	n_token->previous = NULL;
 	return (n_token);
 }
 
@@ -59,11 +65,15 @@ void	destroy_tokens(t_token *first)
 {
 	t_token	*t;
 
+	if (!first)
+		return ;
 	t = first;
 	while (t != NULL)
 	{
 		free(t->value);
-		free(t);
-		t = t->next;
+		first = t;
+		t = first->next;
+		free(first);
 	}
+	printf("deleted all nodes\n");
 }

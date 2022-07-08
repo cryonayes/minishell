@@ -6,7 +6,7 @@
 /*   By: fcil <fcil@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 16:50:21 by fcil              #+#    #+#             */
-/*   Updated: 2022/07/08 20:26:56 by fcil             ###   ########.fr       */
+/*   Updated: 2022/07/09 00:05:32 by fcil             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,24 +49,46 @@ void	skip_spaces(char **cmd)
 	*cmd = tcmd;
 }
 
-void	*tokenizer(char *cmd, t_token *list)
+void	get_words(char	**cmd, t_token **list)
 {
+	int		len;
+	char	*tcmd;
+	char	*value;
 	int		i;
+	t_token	*n_token;
+
+	tcmd = *cmd;
+	len = 0;
+	i = -1;
+	while (!ft_check_wordend(tcmd[len]))
+		len++;
+	value = ft_calloc(len + 1, sizeof(char));
+	while (!ft_check_wordend(*tcmd))
+	{
+		value[++i] = *tcmd;
+		tcmd++;
+	}
+	n_token = token_create(value, T_LITERAL);
+	token_add(&*list, n_token);
+	*cmd = tcmd;
+}
+
+void	*tokenizer(char *cmd, t_token **list)
+{
 	char	*tcmd;
 
 	tcmd = cmd;
-	i = -1;
-	while (*tcmd)
+	while (*tcmd && ft_isascii(*tcmd))
 	{
 		if (ft_check_wordend(*tcmd))
 		{
 			skip_spaces(&tcmd);
-			get_operator(&tcmd, &list);
-			quotes_check(&tcmd, &list);
+			get_operator(&tcmd, list);
+			quotes_check(&tcmd, list);
 		}
-		//todo: Get str val. and add list.
-		if (*tcmd)
-			tcmd++;
+		if (!*tcmd)
+			break ;
+		get_words(&tcmd, list);
 	}
 	printf("\n-----END-----\n");
 }

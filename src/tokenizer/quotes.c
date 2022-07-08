@@ -6,7 +6,7 @@
 /*   By: fcil <fcil@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/03 16:56:01 by fcil              #+#    #+#             */
-/*   Updated: 2022/07/08 18:49:30 by fcil             ###   ########.fr       */
+/*   Updated: 2022/07/08 23:51:13 by fcil             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,12 +24,11 @@ char	*isclosed(char **str, char c)
 		if (str[0][i] == c)
 		{
 			j = -1;
-			tstr = malloc(i + 1 * sizeof(char));
+			tstr = ft_calloc(i + 1, sizeof(char));
 			while (++j < i)
 			{
 				tstr[j] = str[0][j];
 			}
-			tstr[j] = '\0';
 			*str += i;
 			return (tstr);
 		}
@@ -105,20 +104,26 @@ void	quotes_check(char **cmd, t_token **list)
 {
 	t_token	*n_token;
 	char	*value;
+	char	*tcmd;
 
+	tcmd = *cmd;
 	n_token = NULL;
-	value = get_quotes(cmd, '"');
+	value = get_quotes(&tcmd, '"');
 	if (value != NULL)
 	{
 		value = getkeys_dquote(value);
 		n_token = token_create(value, T_LITERAL);
 		token_add(&*list, n_token);
 		value = NULL;
+		tcmd++;
 	}
-	value = get_quotes(cmd, '\'');
+	value = get_quotes(&tcmd, '\'');
 	if (value != NULL)
 	{
 		n_token = token_create(value, T_LITERAL);
 		token_add(&*list, n_token);
+		tcmd++;
+		value = NULL;
 	}
+	*cmd = tcmd;
 }

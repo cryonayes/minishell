@@ -6,7 +6,7 @@
 /*   By: fcil <fcil@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 17:07:30 by fcil              #+#    #+#             */
-/*   Updated: 2022/07/08 20:48:34 by fcil             ###   ########.fr       */
+/*   Updated: 2022/07/09 00:04:35 by fcil             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ typedef struct s_token
 }	t_token;
 
 // tokenizer.c
-void		*tokenizer(char *cmd, t_token *list);
+void		*tokenizer(char *cmd, t_token **list);
 
 //token_actions.c
 void		token_add(t_token **first, t_token *node);

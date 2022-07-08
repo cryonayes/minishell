@@ -6,7 +6,7 @@
 /*   By: fcil <fcil@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/08 20:26:27 by fcil              #+#    #+#             */
-/*   Updated: 2022/07/08 20:47:04 by fcil             ###   ########.fr       */
+/*   Updated: 2022/07/08 22:59:32 by fcil             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ int	get_valueofoperator(char **value, char **cmd)
 	func = ft_isopeningbracket;
 	if (ft_isclosebracket(*tcmd))
 		func = ft_isclosebracket;
-
 	while (func(*tcmd))
 	{
 		value[0][i] = *tcmd;
@@ -72,6 +71,5 @@ void	get_operator(char **cmd, t_token **list)
 		error_exit("WTF ARE YOU DOING \n use these; '<<, >>, <, >'");
 	n_token = token_create(value, get_operatortype(value));
 	token_add(&*list, n_token);
-
 	*cmd = tcmd;
 }
