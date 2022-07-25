@@ -6,7 +6,7 @@
 /*   By: fcil <fcil@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/26 14:01:09 by aeser             #+#    #+#             */
-/*   Updated: 2022/07/09 00:07:59 by fcil             ###   ########.fr       */
+/*   Updated: 2022/07/25 10:39:38 by fcil             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,4 +45,5 @@ int	main(int argc, char **argv, char **env)
 		print_tokens(list);
 		//destroy_tokens(list); //todo: seg fault will fix
 	}
+	
 }
