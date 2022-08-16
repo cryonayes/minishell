@@ -6,7 +6,7 @@
 /*   By: fcil <fcil@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/03 16:56:01 by fcil              #+#    #+#             */
-/*   Updated: 2022/07/08 23:51:13 by fcil             ###   ########.fr       */
+/*   Updated: 2022/07/25 10:45:17 by fcil             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ char	*get_envkey(char **ptr)
 
 	i = 0;
 	key = *ptr;
-	while (isalnum(key[i]) && key[i])
+	while (ft_isalnum(key[i]) && key[i])
 		i++;
 	str = ft_calloc(i + 1, sizeof(char));
 	*ptr = &key[i];

@@ -6,7 +6,7 @@
 /*   By: fcil <fcil@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/02 18:26:50 by fcil              #+#    #+#             */
-/*   Updated: 2022/07/08 18:46:38 by fcil             ###   ########.fr       */
+/*   Updated: 2022/08/16 15:00:46 by fcil             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,4 +29,19 @@ char	*ft_sum_strjoin(char *src, char *str2)
 		return (src);
 	free(src);
 	return (m_str);
+}
+
+void	ft_free_split(char ***split)
+{
+	int	i;
+
+	i = 0;
+	while ((*split)[i] != NULL)
+	{
+		free((*split)[i]);
+		(*split)[i] = NULL;
+		i++;
+	}
+	free(*split);
+	*split = NULL;
 }

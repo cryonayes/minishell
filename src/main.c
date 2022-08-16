@@ -6,7 +6,7 @@
 /*   By: fcil <fcil@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/26 14:01:09 by aeser             #+#    #+#             */
-/*   Updated: 2022/07/25 10:39:38 by fcil             ###   ########.fr       */
+/*   Updated: 2022/08/16 15:51:32 by fcil             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,24 +26,68 @@ void	main_loop(void)
 	}
 }
 
-int	main(int argc, char **argv, char **env)
+void	printdir(void)
+{
+	char	*cwd;
+
+	cwd = getcwd(NULL, 0);
+	printf("\nDir: %s", cwd);
+}
+
+int	takeinput(char **str)
+{
+	prompt = env_get_val("PS1");
+	if (prompt == NULL)
+		prompt = PROMPT;
+	*str = readline(PROMPT);
+	if (ft_strlen(*str) != 0)
+	{
+		add_history(*str);
+		return (0);
+	}
+	return (1);
+}
+
+void execArgs(t_token *list)
+{
+	pid_t pid = fork(); 
+	t_token	*cur;
+	char	**args;
+
+	cur = list;
+	args[0] = ft_strjoin(BINPATH, cur->value);
+	cur = cur->next;
+	args[1] = cur->value;
+	if (pid == -1) {
+		printf("\nFailed forking child..");
+		return;
+	} else if (pid == 0) {
+		printf("log:|%s|\nlog:|%s|\n", args[0], args[1]);
+		execve(args[0], args[1], NULL);
+		exit(0);
+	} else {
+		wait(NULL); 
+		return;
+	}
+}
+
+int	main(void)
 {
 	char	*input;
-	t_token	*list;
 
-	(void)(argc);
-	(void)(argv);
-	(void)(env);
-	list = NULL;
+	signal(SIGQUIT, SIG_IGN);
+	if (env_init() == ERROR)
+		return (EXIT_FAILURE);
 	while (1)
 	{
-		input = readline(PROMPT);
-		printf("%d", *input);
-		if (input == NULL)
+		signal(SIGINT, signalint_func);
+		if (takeinput(&input))
 			continue ;
-		tokenizer(input, &list);
-		print_tokens(list);
-		//destroy_tokens(list); //todo: seg fault will fix
+
+		// tokenizer(input, &list);
+		// print_tokens(list);
+		// execArgs(list);
+		// //destroy_tokens(list); //todo: seg fault will fix
 	}
-	
+
 }

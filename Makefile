@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: aeser <aeser@42kocaeli.com.tr>             +#+  +:+       +#+         #
+#    By: fcil <fcil@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/26 13:53:13 by aeser             #+#    #+#              #
-#    Updated: 2022/06/26 16:15:59 by aeser            ###   ########.fr        #
+#    Updated: 2022/07/25 10:46:19 by fcil             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,6 +19,7 @@ SRCS		:= $(shell find $(SRC_DIR) -type f -name "*.c")
 OBJS		:= $(SRCS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
 
 LIBS		:= -lreadline
+
 LIBFT_DIR	:= ./libs/libft
 LIBFT		:= $(LIBFT_DIR)/libft.a
 

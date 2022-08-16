@@ -6,7 +6,7 @@
 /*   By: fcil <fcil@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 17:07:30 by fcil              #+#    #+#             */
-/*   Updated: 2022/07/09 00:04:35 by fcil             ###   ########.fr       */
+/*   Updated: 2022/08/16 11:53:37 by fcil             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,17 @@
 # define MINISHELL_H
 
 # define SPACE ' '
-# define PROMPT "minishell>"
+# define PROMPT ">"
+# define BINPATH "/bin/"
 
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <stdlib.h>
+# include <signal.h>
+# include <stdio.h>
 # include "libft.h"
 # include <stdbool.h>
+# include "global.h"
 
 typedef enum e_tokenType
 {
@@ -55,20 +59,14 @@ char		*get_envkey(char **ptr);
 char		*getkeys_dquote(char	*value);
 void		quotes_check(char **cmd, t_token **list);
 
-//utils.c
-void		error_exit(char	*str);
-char		*ft_sum_strjoin(char *src, char *str2);
-
 //redirect.c
 void		get_operator(char **cmd, t_token **list);
 int			get_operatorlen(char *str);
 int			get_valueofoperator(char **value, char **cmd);
 
-//controlparsing.c
-bool		ft_isspace(char c);
-bool		ft_isquote(char c);
-bool		ft_isoperator(char c);
-bool		ft_isclosebracket(char c);
-bool		ft_isopeningbracket(char c);
+
+//launch.c
+int			launch(char **args);
+int			execute(char **args);
 
 #endif
