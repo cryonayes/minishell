@@ -5,30 +5,47 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: fcil <fcil@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/07/02 18:26:50 by fcil              #+#    #+#             */
-/*   Updated: 2022/08/16 15:00:46 by fcil             ###   ########.fr       */
+/*   Created: 2022/08/22 14:52:01 by fcil              #+#    #+#             */
+/*   Updated: 2022/08/22 14:56:18 by fcil             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	error_exit(char	*str)
+int	split_count(char **split)
 {
-	printf("OH NO BEST SHELL HAS DOWN!!!\n Error Message: ");
-	printf("%s\n", str);
-	exit(-1);
+	int	i;
+
+	i = 0;
+	while (split && split[i])
+		i++;
+	return (i);
 }
 
-char	*ft_sum_strjoin(char *src, char *str2)
+int	print_error(char *s1, char *s2, char *s3, char *message)
 {
-	char	*m_str;
-
-	m_str = src;
-	m_str = ft_strjoin(m_str, str2);
-	if (!m_str)
-		return (src);
-	free(src);
-	return (m_str);
+	if (s1)
+		ft_putstr_fd(s1, 2);
+	if (s2)
+	{
+		if (s1)
+			ft_putstr_fd(": ", 2);
+		ft_putstr_fd(s2, 2);
+	}
+	if (s3)
+	{
+		if (s1 || s2)
+			ft_putstr_fd(": ", 2);
+		ft_putstr_fd(s3, 2);
+	}
+	if (message)
+	{
+		if (s1 || s2 || s3)
+			ft_putstr_fd(": ", 2);
+		ft_putstr_fd(message, 2);
+	}
+	ft_putchar_fd('\n', 2);
+	return (ERROR);
 }
 
 void	ft_free_split(char ***split)
