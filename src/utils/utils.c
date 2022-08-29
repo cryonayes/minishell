@@ -6,7 +6,7 @@
 /*   By: fcil <fcil@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/22 14:52:01 by fcil              #+#    #+#             */
-/*   Updated: 2022/08/22 14:56:18 by fcil             ###   ########.fr       */
+/*   Updated: 2022/08/27 19:17:30 by fcil             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	split_count(char **split)
 	return (i);
 }
 
-int	print_error(char *s1, char *s2, char *s3, char *message)
+int	print_e(char *s1, char *s2, char *s3, char *message)
 {
 	if (s1)
 		ft_putstr_fd(s1, 2);
@@ -45,6 +45,13 @@ int	print_error(char *s1, char *s2, char *s3, char *message)
 		ft_putstr_fd(message, 2);
 	}
 	ft_putchar_fd('\n', 2);
+	return (ERROR);
+}
+
+int	print_error_errno(char *s1, char *s2, char *s3)
+{
+	print_e(s1, s2, s3, strerror(errno));
+	errno = 0;
 	return (ERROR);
 }
 

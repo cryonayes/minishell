@@ -36,7 +36,7 @@ $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
 $(LIBFT):
-	@make -C $(LIBFT_DIR)
+	@make bonus -C $(LIBFT_DIR)
 
 clean:
 	@rm -rf $(OBJ_DIR)
