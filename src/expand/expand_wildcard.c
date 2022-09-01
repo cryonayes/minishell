@@ -6,12 +6,11 @@
 /*   By: fcil <fcil@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/31 05:22:12 by fcil              #+#    #+#             */
-/*   Updated: 2022/08/31 06:14:25 by fcil             ###   ########.fr       */
+/*   Updated: 2022/09/01 19:30:30 by fcil             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
 
 static int	pattern_match_file(char *pattern, char **split, char *file)
 {
@@ -25,7 +24,7 @@ static int	pattern_match_file(char *pattern, char **split, char *file)
 		shift_fname = ft_strnstr(shift_fname, split[i], ft_strlen(shift_fname));
 		if (shift_fname == NULL)
 			return (0);
-		shift_fname += ft_strlen(split[i]); //skips nulls
+		shift_fname += ft_strlen(split[i]);
 		i++;
 	}
 	if (pattern[0] != -1
@@ -57,7 +56,6 @@ static t_list	*expand_pattern_to_list(char *pattern, char **split,
 		if (pattern_match_file(pattern, split, files[i]))
 		{
 			tmp = ft_strdup(files[i]);
-			printf("%s\n", tmp);
 			new_token = token_create(tmp, TOK_WILDCARD);
 			if (tmp == NULL || new_token == NULL)
 			{

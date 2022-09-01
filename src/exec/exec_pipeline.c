@@ -6,7 +6,7 @@
 /*   By: fcil <fcil@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 18:21:11 by fcil              #+#    #+#             */
-/*   Updated: 2022/09/01 18:35:08 by fcil             ###   ########.fr       */
+/*   Updated: 2022/09/01 19:26:43 by fcil             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,6 @@ int	exec_pipeline(t_list *pipeline, t_list *l_free)
 	iter = cmd_content(pipeline)->l_element;
 	while (iter)
 	{
-		printf("i:%d\n", i);
 		pid = pipeline_pipe_fork(iter, pipes, i, l_free);
 		if (pid == -1)
 		{

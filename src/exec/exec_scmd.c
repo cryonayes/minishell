@@ -6,7 +6,7 @@
 /*   By: fcil <fcil@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 17:26:16 by fcil              #+#    #+#             */
-/*   Updated: 2022/09/01 16:49:44 by fcil             ###   ########.fr       */
+/*   Updated: 2022/09/01 19:39:56 by fcil             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,7 @@ int	exec_scmd_exec(char **argv)
 
 	signal(SIGINT, SIG_DFL);
 	signal(SIGQUIT, SIG_DFL);
+	termios_change(1);
 	if (!ft_strchr(argv[0], '/') && env_get_value("PATH") != NULL)
 	{
 		if (exec_scmd_search_path(argv) == ERROR)

@@ -6,7 +6,7 @@
 #    By: fcil <fcil@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/26 13:53:13 by aeser             #+#    #+#              #
-#    Updated: 2022/08/30 18:34:44 by fcil             ###   ########.fr        #
+#    Updated: 2022/09/01 19:13:10 by fcil             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,7 +24,7 @@ LIBFT_DIR	:= ./libs/libft
 LIBFT		:= $(LIBFT_DIR)/libft.a
 
 INCLUDE		:= -I./include
-CFLAGS		:= -Wall -Wextra $(INCLUDE) $(LIBS) -g
+CFLAGS		:= -Wall -Wextra -Werror $(INCLUDE) $(LIBS) -g
 CC			:= gcc
 
 all: $(NAME)

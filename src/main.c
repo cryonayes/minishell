@@ -6,7 +6,7 @@
 /*   By: fcil <fcil@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/26 14:01:09 by aeser             #+#    #+#             */
-/*   Updated: 2022/08/31 06:27:41 by fcil             ###   ########.fr       */
+/*   Updated: 2022/09/01 19:39:10 by fcil             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,8 +63,19 @@ int	main(void)
 	while (1)
 	{
 		signal(SIGINT, signal_newline);
+		termios_change(0);
 		input = get_input();
+		if (input == NULL)
+		{
+			if (isatty(STDERR_FILENO))
+				ft_putendl_fd("exit", STDERR_FILENO);
+			termios_change(1);
+			break ;
+		}
 		process_input(input);
 	}
-	return (0);
+	rl_clear_history();
+	if (g_env)
+		ft_free_split(&g_env);
+	exit(exec_exit_status_get());
 }

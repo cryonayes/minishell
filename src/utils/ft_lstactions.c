@@ -6,12 +6,11 @@
 /*   By: fcil <fcil@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/27 19:10:55 by fcil              #+#    #+#             */
-/*   Updated: 2022/08/28 14:48:14 by fcil             ###   ########.fr       */
+/*   Updated: 2022/09/01 19:14:14 by fcil             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
 
 int	lst_node_remove(t_list **lst, t_list *node, void (*del)(void *))
 {
@@ -79,21 +78,3 @@ void	print_tokens(t_list	*l_token)
 		printf("%s\n", token_content(l_token)->str);
 	}
 }
-
-// void	print_tokens(t_list	*l_token)
-// {
-// 	int	i = 0;
-// 	printf("\e[37;7mTOKEN:\t\t\e[m");
-// 	if (l_token != NULL)
-// 	{
-// 		while (l_token->next != NULL)
-// 		{ i++;
-// 			if (token_content(l_token)->flags & TOK_CONNECTED)
-// 				printf("%s \033[0;35m+ \033[m", token_content(l_token)->str);
-// 			else
-// 				printf("%s f:%d \033[0;32m: \033[m", token_content(l_token)->str, token_content(l_token)->flags);
-// 			l_token = l_token->next;
-// 		}
-// 		printf("%s f:%d elem%d\n", token_content(l_token)->str,token_content(l_token)->flags, ++i);
-// 	}
-// }

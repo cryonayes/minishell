@@ -6,7 +6,7 @@
 /*   By: fcil <fcil@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/26 15:11:13 by fcil              #+#    #+#             */
-/*   Updated: 2022/08/26 15:12:20 by fcil             ###   ########.fr       */
+/*   Updated: 2022/09/01 19:30:56 by fcil             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	c_token_destroy(void *c_token)
 	free(c_token);
 }
 
-int		token_is_cmd(t_list *token)
+int	token_is_cmd(t_list *token)
 {
 	if (token == NULL)
 		return (0);

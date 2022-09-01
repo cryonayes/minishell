@@ -6,7 +6,7 @@
 /*   By: fcil <fcil@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/22 16:40:55 by fcil              #+#    #+#             */
-/*   Updated: 2022/08/27 19:02:45 by fcil             ###   ########.fr       */
+/*   Updated: 2022/09/01 19:39:07 by fcil             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,3 +32,20 @@ void	signal_default(int sig)
 	}
 }
 
+int	termios_change(int control)
+{
+	struct termios	terminos_p;
+	int				status;
+
+	status = tcgetattr(STDOUT_FILENO, &terminos_p);
+	if (status == -1)
+		return (ERROR);
+	if (control)
+		terminos_p.c_lflag |= ECHOCTL;
+	else
+		terminos_p.c_lflag &= ~(ECHOCTL);
+	status = tcsetattr(STDOUT_FILENO, TCSANOW, &terminos_p);
+	if (status == -1)
+		return (ERROR);
+	return (0);
+}

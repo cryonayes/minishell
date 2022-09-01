@@ -6,7 +6,7 @@
 /*   By: fcil <fcil@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/26 17:21:37 by fcil              #+#    #+#             */
-/*   Updated: 2022/08/29 18:15:09 by fcil             ###   ########.fr       */
+/*   Updated: 2022/09/01 19:32:19 by fcil             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,11 +80,9 @@ static int	parser_recursive_merge(t_list **l_cmd)
 		group = parser_cmd_group_merge(l_cmd);
 		if (group == ERROR)
 			return (ERROR);
-		printer_structure(*l_cmd);//log
 		pipeline = parser_cmd_pipeline_merge(l_cmd);
 		if (pipeline == ERROR)
 			return (ERROR);
-		printer_structure(*l_cmd);//log
 	}
 	return (0);
 }
@@ -93,12 +91,9 @@ t_list	*parser(t_list *l_token)
 {
 	t_list	*l_cmd;
 
-	print_tokens(l_token);
 	l_cmd = parser_scmd_tokens(l_token);
 	if (l_cmd == NULL)
 		return (NULL);
-	printer_cmd(l_cmd); //log
-	printer_structure(l_cmd);//log
 	if (parser_recursive_merge(&l_cmd) == ERROR)
 	{
 		ft_lstclear(&l_cmd, cmd_destroy);

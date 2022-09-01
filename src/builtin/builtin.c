@@ -6,20 +6,20 @@
 /*   By: fcil <fcil@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/31 23:04:05 by fcil              #+#    #+#             */
-/*   Updated: 2022/09/01 16:34:21 by fcil             ###   ########.fr       */
+/*   Updated: 2022/09/01 19:13:41 by fcil             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 static const struct s_builtins	g_builtins[] = {
-	{"echo", builtin_echo},
-	{"cd", builtin_cd},
-	{"pwd", builtin_pwd},
-	{"env", builtin_env},
-	{"export", builtin_export},
-	{"unset", builtin_unset},
-	{NULL, NULL},
+{"echo", builtin_echo},
+{"cd", builtin_cd},
+{"pwd", builtin_pwd},
+{"env", builtin_env},
+{"export", builtin_export},
+{"unset", builtin_unset},
+{NULL, NULL},
 };
 
 static int	num_is_numeric(char *str)

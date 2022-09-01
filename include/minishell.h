@@ -6,7 +6,7 @@
 /*   By: fcil <fcil@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 17:07:30 by fcil              #+#    #+#             */
-/*   Updated: 2022/09/01 18:38:33 by fcil             ###   ########.fr       */
+/*   Updated: 2022/09/01 19:34:48 by fcil             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,9 @@
 # include <dirent.h>
 # include <limits.h>
 # include "fcntl.h"
-#include <sys/stat.h>
+# include <sys/stat.h>
+# include <sys/wait.h>
+# include <termios.h>
 
 # define ERROR		-1
 # define NAME	"minishell"
@@ -41,6 +43,7 @@ int			env_unset_var(char *name);
 char		*get_next_line(int fd);
 char		*str_append_chr(char *str, char append);
 char		*str_append_str(char *str, char *append);
+char		str_last_chr(char *str);
 
 //utils.c
 int			print_e(char *s1, char *s2, char *s3, char *message);
@@ -62,9 +65,10 @@ int			lst_relink(t_list **lst, t_list *node, t_list *start, t_list *end);
 //signal.c
 void		signal_newline(int sig);
 void		signal_default(int sig);
+int			termios_change(int control);
 
 //tokenlist.c
-char	**l_token_to_split(t_list *l_token);
+char		**l_token_to_split(t_list *l_token);
 
 //-----TOKENS-----
 # define TOK_TEXT			1
@@ -79,7 +83,6 @@ char	**l_token_to_split(t_list *l_token);
 # define TOK_REDIR			512
 # define TOK_HEREDOC		1024
 # define TOK_WILDCARD		2048
-
 
 typedef struct s_token_content
 {
@@ -135,8 +138,11 @@ int			exec_wait_pid(int last_pid, char *name);
 int			exec_wait_for_all(int last_pid);
 //exec_scmd_path.c
 int			exec_scmd_search_path(char **argv);
+void		exec_scmd_free_exit(int status, char **argv, t_list *l_free);
+
 //exec_pipeline.c
-int	exec_pipeline(t_list *pipeline, t_list *l_free);
+int			exec_pipeline(t_list *pipeline, t_list *l_free);
+
 //exec_pipeline_pipes.c
 void		exec_pipeline_pipes_close(int pipes[2][2], int i, int last);
 void		exec_pipeline_pipes_set(int fd[2], int pipes[2][2], int i,
@@ -145,12 +151,12 @@ void		exec_pipeline_pipes_set(int fd[2], int pipes[2][2], int i,
 //-----PARSER-----
 //parser.c
 t_list		*parser(t_list *l_token);
-
 //parser_group.c
 int			parser_cmd_group_merge(t_list **l_cmd);
-
 //parser_pipeline.c
 int			parser_cmd_pipeline_merge(t_list **l_cmd);
+//parser_heredoc.c
+int			parser_heredoc(t_list *l_token);
 
 //-----CMD------
 # define CMD_SCMD		1
@@ -250,16 +256,5 @@ int			builtin_echo(int argc, char **argv);
 int			builtin_env(int argc, char **argv);
 int			builtin_pwd(int argc, char **argv);
 int			builtin_unset(int argc, char **argv);
-
-// PRINTER_CMD
-void		printer_cmd(t_list *l_cmd);
-void		printer_structure(t_list *l_cmd);
-void		print_tokens(t_list	*l_token);
-
-// PRINTER_SCMD
-void		printer_scmd(t_scmd *scmd);
-void		printer_other(int type);
-void		printer_scmd_pipeline(t_list *l_scmd_pipeline, int newline);
-
 
 #endif
