@@ -6,7 +6,7 @@
 /*   By: fcil <fcil@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/22 14:50:48 by fcil              #+#    #+#             */
-/*   Updated: 2022/08/26 15:56:00 by fcil             ###   ########.fr       */
+/*   Updated: 2022/08/30 17:44:00 by fcil             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,4 +68,9 @@ char	*env_get_value(char *name)
 		return (ft_strchr(env_var, '=') + 1);
 	else
 		return (NULL);
+}
+
+int	env_is_var_char(char c)
+{
+	return (ft_isalnum(c) || c == '_');
 }

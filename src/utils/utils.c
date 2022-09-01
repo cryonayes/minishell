@@ -6,21 +6,11 @@
 /*   By: fcil <fcil@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/22 14:52:01 by fcil              #+#    #+#             */
-/*   Updated: 2022/08/27 19:17:30 by fcil             ###   ########.fr       */
+/*   Updated: 2022/09/01 16:44:29 by fcil             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-int	split_count(char **split)
-{
-	int	i;
-
-	i = 0;
-	while (split && split[i])
-		i++;
-	return (i);
-}
 
 int	print_e(char *s1, char *s2, char *s3, char *message)
 {

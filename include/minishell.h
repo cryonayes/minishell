@@ -6,19 +6,22 @@
 /*   By: fcil <fcil@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 17:07:30 by fcil              #+#    #+#             */
-/*   Updated: 2022/08/29 17:18:55 by fcil             ###   ########.fr       */
+/*   Updated: 2022/09/01 18:38:33 by fcil             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-
 # include "signal.h"
 # include "libft.h"
 # include "errno.h"
 # include <readline/readline.h>
 # include <readline/history.h>
+# include <dirent.h>
+# include <limits.h>
+# include "fcntl.h"
+#include <sys/stat.h>
 
 # define ERROR		-1
 # define NAME	"minishell"
@@ -29,17 +32,27 @@ extern char	**g_env;
 int			env_init(void);
 char		*env_find_var(char *name);
 char		*env_get_value(char *name);
-
+int			env_is_var_char(char c);
+//env_modify.c
+int			env_set_env(char *name, char *value);
+int			env_put_var(char *str);
+int			env_unset_var(char *name);
 //get_next_line.c
 char		*get_next_line(int fd);
 char		*str_append_chr(char *str, char append);
 char		*str_append_str(char *str, char *append);
 
 //utils.c
-int			split_count(char **argv);
 int			print_e(char *s1, char *s2, char *s3, char *message);
 void		ft_free_split(char ***split);
 int			print_error_errno(char *s1, char *s2, char *s3);
+
+// utils_split.c
+int			split_count(char **argv);
+int			split_append_str(char ***split, char *str);
+int			split_remove_str(char ***split, char *remove_str);
+int			split_replace_str(char ***split, char *old_str, char *new_str);
+void		split_sort(char **split);
 
 //ft_lstactions.c
 int			lst_node_remove(t_list **lst, t_list *node, void (*del)(void *));
@@ -49,6 +62,9 @@ int			lst_relink(t_list **lst, t_list *node, t_list *start, t_list *end);
 //signal.c
 void		signal_newline(int sig);
 void		signal_default(int sig);
+
+//tokenlist.c
+char	**l_token_to_split(t_list *l_token);
 
 //-----TOKENS-----
 # define TOK_TEXT			1
@@ -101,9 +117,30 @@ int			syntax_missing_op(t_list *l_token);
 int			syntax_redir(t_list *l_token);
 
 //-----EXEC-------
+// POSIX BASED EXIT STATUS
+# define EXEC_NOEXEC	126
+# define EXEC_NOTFOUND	127
 //exec_status.c
 void		exec_exit_status_set(int status);
 int			exec_exit_status_get(void);
+//exec.c
+int			exec_recursive(t_list *l_cmd, t_list *l_free);
+void		exec_free_all(char **argv, t_list *l_free);
+//exec_scmd.c
+int			exec_scmd(t_list *scmd, t_list *l_free);
+int			exec_scmd_preperation(t_list *scmd, char ***argv);
+int			exec_scmd_exec(char **argv);
+//exec_waitpid.c
+int			exec_wait_pid(int last_pid, char *name);
+int			exec_wait_for_all(int last_pid);
+//exec_scmd_path.c
+int			exec_scmd_search_path(char **argv);
+//exec_pipeline.c
+int	exec_pipeline(t_list *pipeline, t_list *l_free);
+//exec_pipeline_pipes.c
+void		exec_pipeline_pipes_close(int pipes[2][2], int i, int last);
+void		exec_pipeline_pipes_set(int fd[2], int pipes[2][2], int i,
+				int last);
 
 //-----PARSER-----
 //parser.c
@@ -158,18 +195,71 @@ void		scmd_destroy(void *c_element);
 # define REDIR_IN		3
 # define REDIR_HEREDOC	4
 
+typedef struct s_redir_undo_content
+{
+	int		fd_repl;
+	int		fd_repl_dup;
+}	t_redir_undo;
+
 //redir.c
 int			redir_type(char *redir);
+int			redir(t_list *l_token, t_list **l_undo);
+
+//redirundo.c
+int			redir_undo_add_fd(t_list **l_undo, int fd);
+int			redir_undo(t_list **l_undo);
+
+//-----EXPAND------
+//expand.c
+int			expand_var(t_scmd *scmd);
+int			expand_wildcard(t_scmd *c_scmd);
+
+//expand_var_token.c
+int			expand_var_token_list(t_list *l_token);
+
+//expand_var_split.c
+int			expand_var_splitting(t_list **l_token);
+
+//expand_wildcard
+int			expand_wildcard_list(t_list	**l_token, char **files);
+//expand_wildcard_utils.c
+int			expand_token_is_wildcard(t_list *token);
+char		*expand_pattern_get(t_list *token);
+char		*expand_wildcard_append_str(char *wildcard, t_list *token);
+char		**expand_files_current_dir(void);
+void		expand_wildcard_replace_connected(t_list **l_token, t_list *old,
+				t_list *new);
+
+//-----BUILTINS-----
+struct s_builtins
+{
+	char	*name;
+	int		(*func)(int argc, char **argv);
+};
+
+// builtin.c
+int			builtin_check(char **argv);
+int			builtin_exec(char **argv, t_list *l_free);
+int			builtin_exit(int argc, char **argv, t_list *l_free);
+
+int			builtin_cd(int argc, char **argv);
+int			builtin_export(int argc, char **argv);
+
+//builtin_func.c
+int			builtin_echo(int argc, char **argv);
+int			builtin_env(int argc, char **argv);
+int			builtin_pwd(int argc, char **argv);
+int			builtin_unset(int argc, char **argv);
 
 // PRINTER_CMD
-void	printer_cmd(t_list *l_cmd);
-void	printer_structure(t_list *l_cmd);
-void	print_tokens(t_list	*l_token);
+void		printer_cmd(t_list *l_cmd);
+void		printer_structure(t_list *l_cmd);
+void		print_tokens(t_list	*l_token);
 
 // PRINTER_SCMD
-void	printer_scmd(t_scmd *scmd);
-void	printer_other(int type);
-void	printer_scmd_pipeline(t_list *l_scmd_pipeline, int newline);
+void		printer_scmd(t_scmd *scmd);
+void		printer_other(int type);
+void		printer_scmd_pipeline(t_list *l_scmd_pipeline, int newline);
 
 
 #endif

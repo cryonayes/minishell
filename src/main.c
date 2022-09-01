@@ -6,7 +6,7 @@
 /*   By: fcil <fcil@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/26 14:01:09 by aeser             #+#    #+#             */
-/*   Updated: 2022/08/27 17:43:02 by fcil             ###   ########.fr       */
+/*   Updated: 2022/08/31 06:27:41 by fcil             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,13 +44,13 @@ static void	process_input(char *input)
 	l_token = lexer(input);
 	free(input);
 	if (l_token != NULL)
-	 	l_parser = parser(l_token);
-	// if (l_token != NULL && l_parser != NULL)
-	// 	exec_recursive(l_parser, false, l_parser);
-	// if (l_parser != NULL)
-	// 	ft_lstclear(&l_parser, cmd_destroy);
-	// else if (l_token != NULL)
-	// 	ft_lstclear(&l_token, c_token_destroy);
+		l_parser = parser(l_token);
+	if (l_token != NULL && l_parser != NULL)
+		exec_recursive(l_parser, l_parser);
+	if (l_parser != NULL)
+		ft_lstclear(&l_parser, cmd_destroy);
+	else if (l_token != NULL)
+		ft_lstclear(&l_token, c_token_destroy);
 }
 
 int	main(void)
